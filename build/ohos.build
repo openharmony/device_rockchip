@@ -1,0 +1,10 @@
+{
+    "subsystem": "rockchip_products",
+    "parts": {
+        "rockchip_products": {
+            "module_list": [
+                "//device/rockchip/build:products_group"
+            ]
+        }
+    }
+}
