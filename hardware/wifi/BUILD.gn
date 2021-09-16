@@ -1,0 +1,57 @@
+# Copyright (C) 2021 HiHope Open Source Organization .
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+
+AP6XXX_ETC_DIR = "//device/rockchip/hardware/wifi/ap6xxx"
+
+ohos_prebuilt_etc("clm_bcm43752a2_ag.blob") {
+  source = "$AP6XXX_ETC_DIR/clm_bcm43752a2_ag.blob"
+  install_images = [ "vendor" ]
+  relative_install_dir = "firmware"
+  part_name = "rockchip_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("fw_bcm43752a2_ag_apsta.bin") {
+  source = "$AP6XXX_ETC_DIR/fw_bcm43752a2_ag_apsta.bin"
+  install_images = [ "vendor" ]
+  relative_install_dir = "firmware"
+  part_name = "rockchip_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("fw_bcm43752a2_ag.bin") {
+  source = "$AP6XXX_ETC_DIR/fw_bcm43752a2_ag.bin"
+  install_images = [ "vendor" ]
+  relative_install_dir = "firmware"
+  part_name = "rockchip_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("nvram_ap6275s.txt") {
+  source = "$AP6XXX_ETC_DIR/nvram_ap6275s.txt"
+  install_images = [ "vendor" ]
+  relative_install_dir = "firmware"
+  part_name = "rockchip_products"
+  install_enable = true
+}
+
+group("ap6xxx") {
+  deps = [
+    ":clm_bcm43752a2_ag.blob",
+    ":fw_bcm43752a2_ag_apsta.bin",
+    ":fw_bcm43752a2_ag.bin",
+    ":nvram_ap6275s.txt",
+  ]
+}
