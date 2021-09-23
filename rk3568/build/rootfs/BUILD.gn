@@ -13,15 +13,15 @@
 
 import("//build/ohos.gni")
 
-ohos_prebuilt_etc("init.Hi3516DV300.cfg") {
-  source = "init.Hi3516DV300.cfg"
+ohos_prebuilt_etc("init.rk3568.cfg") {
+  source = "init.rk3568.cfg"
   install_images = [ "system" ]
   part_name = "rockchip_products"
   install_enable = true
 }
 
-ohos_prebuilt_etc("init.Hi3516DV300.usb.cfg") {
-  source = "init.Hi3516DV300.usb.cfg"
+ohos_prebuilt_etc("init.rk3568.usb.cfg") {
+  source = "init.rk3568.usb.cfg"
   install_images = [ "system" ]
   part_name = "rockchip_products"
   install_enable = true
@@ -44,8 +44,8 @@ ohos_prebuilt_executable("display-hotplug.sh") {
 group("init_configs") {
   deps = [
     ":display-hotplug.sh",
-    ":init.Hi3516DV300.cfg",
-    ":init.Hi3516DV300.usb.cfg",
+    ":init.rk3568.cfg",
+    ":init.rk3568.usb.cfg",
     ":init.cfg",
   ]
 }
