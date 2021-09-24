@@ -14,6 +14,8 @@
 import("//build/ohos.gni")
 
 AP6XXX_ETC_DIR = "//device/rockchip/hardware/wifi/ap6xxx"
+WIFI_BIN_DIR = "//device/rockchip/hardware/wifi/bin"
+WIFI_LIB_DIR = "//device/rockchip/hardware/wifi/lib"
 
 ohos_prebuilt_etc("clm_bcm43752a2_ag.blob") {
   source = "$AP6XXX_ETC_DIR/clm_bcm43752a2_ag.blob"
@@ -47,11 +49,46 @@ ohos_prebuilt_etc("nvram_ap6275s.txt") {
   install_enable = true
 }
 
+ohos_prebuilt_executable("wpa_cli") {
+  install_enable = true
+  source = "$WIFI_BIN_DIR/wpa_cli"
+  module_install_dir = "bin"
+  install_images = [ "system" ]
+  part_name = "rockchip_products"
+}
+
+ohos_prebuilt_executable("wpa_supplicant") {
+  install_enable = true
+  source = "$WIFI_BIN_DIR/wpa_supplicant"
+  module_install_dir = "bin"
+  install_images = [ "system" ]
+  part_name = "rockchip_products"
+}
+
+ohos_prebuilt_shared_library("libwpa.z.so") {
+  source = "$WIFI_LIB_DIR/libwpa.z.so"
+  module_install_dir = "lib"
+  install_images = [ "system" ]
+  part_name = "rockchip_products"
+}
+
+ohos_prebuilt_shared_library("libwpa_client.z.so") {
+  source = "$WIFI_LIB_DIR/libwpa_client.z.so"
+  module_install_dir = "lib"
+  install_images = [ "system" ]
+  part_name = "rockchip_products"
+}
+
 group("ap6xxx") {
   deps = [
     ":clm_bcm43752a2_ag.blob",
     ":fw_bcm43752a2_ag_apsta.bin",
     ":fw_bcm43752a2_ag.bin",
     ":nvram_ap6275s.txt",
+    ":wpa_cli",
+    ":wpa_supplicant",
+    ":libwpa_client.z.so",
+    ":libwpa.z.so",
+
   ]
 }
