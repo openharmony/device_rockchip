@@ -10,12 +10,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import("//build/ohos.gni")
 
 AP6XXX_ETC_DIR = "//device/rockchip/hardware/wifi/ap6xxx"
-WIFI_BIN_DIR = "//device/rockchip/hardware/wifi/bin"
+DNS_CONFIG_DIR = "//device/rockchip/hardware/wifi"
 WIFI_LIB_DIR = "//device/rockchip/hardware/wifi/lib"
+WIFI_BIN_DIR = "//device/rockchip/hardware/wifi/bin"
 
 ohos_prebuilt_etc("clm_bcm43752a2_ag.blob") {
   source = "$AP6XXX_ETC_DIR/clm_bcm43752a2_ag.blob"
@@ -45,6 +45,13 @@ ohos_prebuilt_etc("nvram_ap6275s.txt") {
   source = "$AP6XXX_ETC_DIR/nvram_ap6275s.txt"
   install_images = [ "vendor" ]
   relative_install_dir = "firmware"
+  part_name = "rockchip_products"
+  install_enable = true
+}
+
+ohos_prebuilt_etc("resolv.conf") {
+  source = "$DNS_CONFIG_DIR/etc/resolv.conf"
+  install_images = [ "system" ]
   part_name = "rockchip_products"
   install_enable = true
 }
@@ -85,10 +92,10 @@ group("ap6xxx") {
     ":fw_bcm43752a2_ag_apsta.bin",
     ":fw_bcm43752a2_ag.bin",
     ":nvram_ap6275s.txt",
+    ":resolv.conf",
     ":wpa_cli",
     ":wpa_supplicant",
     ":libwpa_client.z.so",
     ":libwpa.z.so",
-
   ]
 }

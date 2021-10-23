@@ -17,6 +17,8 @@ import("//build/ohos/ndk/ndk.gni")
 ohos_prebuilt_shared_library("display_gralloc") {
   if (target_cpu == "arm") {
     source = "lib/libdisplay_gralloc.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libdisplay_gralloc.z.so"
   }     
   subsystem_name = "hdf"
   part_name = "hdf"
@@ -27,6 +29,8 @@ ohos_prebuilt_shared_library("display_gralloc") {
 ohos_prebuilt_shared_library("display_gfx") {
   if (target_cpu == "arm") {
     source = "lib/libdisplay_gfx.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libdisplay_gfx.z.so"
   }     
   subsystem_name = "hdf"
   part_name = "hdf"
@@ -34,9 +38,11 @@ ohos_prebuilt_shared_library("display_gfx") {
   # output_name = "display_gfx.z"
 }
 
-ohos_prebuilt_shared_library("display_device") {
+ohos_prebuilt_shared_library("display_device_drm") {
   if (target_cpu == "arm") {
     source = "lib/libdisplay_device_drm.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libdisplay_device_drm.z.so"
   }     
   subsystem_name = "hdf"
   part_name = "hdf"
@@ -44,12 +50,24 @@ ohos_prebuilt_shared_library("display_device") {
   # output_name = "display_device_drm.z"
 }
 
-ohos_prebuilt_shared_library("display_layer") {
+ohos_prebuilt_shared_library("display_device") {
   if (target_cpu == "arm") {
-    source = "lib/libdisplay_layer.z.so"
+    source = "lib/libdisplay_device.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/libdisplay_device.z.so"
   }     
   subsystem_name = "hdf"
   part_name = "hdf"
   install_enable = true
   # output_name = "display_device_drm.z"
 }
+
+#ohos_prebuilt_shared_library("display_layer") {
+#  if (target_cpu == "arm") {
+#    source = "lib/libdisplay_layer.z.so"
+#  }
+#  subsystem_name = "hdf"
+#  part_name = "hdf"
+#  install_enable = true
+  # output_name = "display_device_drm.z"
+#}

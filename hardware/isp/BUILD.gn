@@ -10,21 +10,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import("//build/ohos.gni")
 
-ISP_LIB_DIR = "//device/rockchip/hardware/isp/lib"
-ISP_ETC_DIR = "//device/rockchip/hardware/isp/etc"
-ISP_BIN_DIR = "//device/rockchip/hardware/isp/bin"
+ISP_DIR="//device/rockchip/hardware/isp"
 
 ohos_prebuilt_shared_library("librkaiq") {
-  source = "$ISP_LIB_DIR/librkaiq.z.so"
+  if (target_cpu == "arm") {
+      source = "$ISP_DIR/lib/librkaiq.z.so"
+  } else {
+      source = "$ISP_DIR/lib64/librkaiq.z.so"
+  }
   subsystem_name = "rockchip_products"
   install_enable = true
 }
 
 ohos_prebuilt_etc("gc8034_RK-CMK-8M-2-v1_CK8401") {
-  source = "$ISP_ETC_DIR/iqfiles/gc8034_RK-CMK-8M-2-v1_CK8401.json"
+  source = "$ISP_DIR/etc/iqfiles/gc8034_RK-CMK-8M-2-v1_CK8401.json"
   install_images = [ "system" ]
   relative_install_dir = "iqfiles"
   part_name = "rockchip_products"
@@ -32,7 +33,11 @@ ohos_prebuilt_etc("gc8034_RK-CMK-8M-2-v1_CK8401") {
 }
 
 ohos_prebuilt_executable("ispserver") {
-  source = "$ISP_BIN_DIR/ispserver"
+  if (target_cpu == "arm") {
+      source = "$ISP_DIR/bin/ispserver"
+  } else {
+      source = "$ISP_DIR/bin64/ispserver"
+  }
   part_name = "rockchip_products"
   install_enable = true
 }

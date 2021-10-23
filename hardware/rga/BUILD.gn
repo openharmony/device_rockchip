@@ -15,8 +15,10 @@ import("//build/ohos.gni")
 import("//build/ohos/ndk/ndk.gni")
 
 ohos_prebuilt_shared_library("librga") {
-  if (target_cpu == "arm") { 
+  if (target_cpu == "arm") {
     source = "lib/librga.z.so"
+  } else if (target_cpu == "arm64") {
+    source = "lib64/librga.z.so"
   }
   subsystem_name = "hdf"
   part_name = "hdf"
