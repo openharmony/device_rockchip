@@ -18,5 +18,6 @@ group("rk3568_group") {
   deps = [
     "kernel:kernel",
     "build/rootfs:init_configs",
+    "bootanimation:bootanimation",
   ]
 }
