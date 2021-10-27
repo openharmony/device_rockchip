@@ -16,12 +16,6 @@ import("//build/ohos.gni")
 print("common_group in")
 group("common_group") {
   deps = [
-    "third_party/tinyalsa:libtinyalsa",
-    "third_party/tinyalsa:tinycap",
-    "third_party/tinyalsa:tinyplay",
-    "third_party/tinyalsa:tinymix",
-    "third_party/v4l2-ctl:v4l2-ctl",
-    "third_party/media-ctl:media-ctl",
     "//device/rockchip/hardware/wifi:ap6xxx",
     "//device/rockchip/hardware/isp:isp",
     "//device/rockchip/hardware/mpp:mpp",
