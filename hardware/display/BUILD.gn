@@ -62,12 +62,12 @@ ohos_prebuilt_shared_library("display_device") {
   # output_name = "display_device_drm.z"
 }
 
-#ohos_prebuilt_shared_library("display_layer") {
-#  if (target_cpu == "arm") {
-#    source = "lib/libdisplay_layer.z.so"
-#  }
-#  subsystem_name = "hdf"
-#  part_name = "hdf"
-#  install_enable = true
+ohos_prebuilt_shared_library("display_layer") {
+  if (target_cpu == "arm") {
+    source = "lib/libdisplay_layer.z.so"
+  }
+  subsystem_name = "hdf"
+  part_name = "hdf"
+  install_enable = true
   # output_name = "display_device_drm.z"
-#}
+}
