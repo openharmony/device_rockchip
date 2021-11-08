@@ -267,7 +267,7 @@ static MPP_RET mpi_enc_gen_smart_gop_ref_cfg(MppEncRefCfg ref, RK_S32 gop_len, R
     RK_S32 lt_cnt = 1;
     RK_S32 st_cnt = 8;
     RK_S32 pos = 0;
-    MPP_RET ret = 0;
+    MPP_RET ret;
 
     memset(&lt_ref, 0, sizeof(lt_ref));
     memset(&st_ref, 0, sizeof(st_ref));
