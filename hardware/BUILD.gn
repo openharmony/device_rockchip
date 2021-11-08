@@ -13,8 +13,7 @@
 
 import("//build/ohos.gni")
 
-print("common_group in")
-group("common_group") {
+group("hardware_group") {
   deps = [
     "//device/rockchip/hardware/wifi:ap6xxx",
     "//device/rockchip/hardware/isp:isp",

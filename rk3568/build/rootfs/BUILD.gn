@@ -20,6 +20,14 @@ ohos_prebuilt_etc("init.rk3568.cfg") {
   install_enable = true
 }
 
+ohos_prebuilt_executable("weston.cfg") {
+  install_enable = true
+  source = "weston.cfg"
+  module_install_dir = "etc/init"
+  install_images = [ "system" ]
+  part_name = "rockchip_products"
+}
+
 ohos_prebuilt_etc("init.rk3568.usb.cfg") {
   source = "init.rk3568.usb.cfg"
   install_images = [ "system" ]
@@ -51,6 +59,7 @@ ohos_prebuilt_executable("display-hotplug.sh") {
 group("init_configs") {
   deps = [
     ":display-hotplug.sh",
+    ":weston.cfg",
     ":init.rk3568.cfg",
     ":init.rk3568.usb.cfg",
     ":init.cfg",

@@ -20,6 +20,6 @@ group("products_group") {
   } 
 
   deps += [
-    "//device/rockchip/common:common_group",
+    "//device/rockchip/hardware:hardware_group",
   ]
 }
