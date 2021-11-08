@@ -281,7 +281,7 @@ static MPP_RET mpi_enc_gen_smart_gop_ref_cfg(MppEncRefCfg ref, RK_S32 gop_len, R
     lt_ref[0].lt_gap        = gop_len;
     lt_ref[0].lt_delay      = 0;
 
-    ret = mpp_enc_ref_cfg_add_lt_cfg(ref, 1, lt_ref);
+    mpp_enc_ref_cfg_add_lt_cfg(ref, 1, lt_ref);
 
     /* st 0 layer 0 - ref */
     st_ref[pos].is_non_ref  = 0;
@@ -308,7 +308,7 @@ static MPP_RET mpi_enc_gen_smart_gop_ref_cfg(MppEncRefCfg ref, RK_S32 gop_len, R
     st_ref[pos].repeat      = 0;
     pos++;
 
-    ret = mpp_enc_ref_cfg_add_st_cfg(ref, pos, st_ref);
+    mpp_enc_ref_cfg_add_st_cfg(ref, pos, st_ref);
 
     /* check and get dpb size */
     ret = mpp_enc_ref_cfg_check(ref);
