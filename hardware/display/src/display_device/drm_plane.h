@@ -28,6 +28,17 @@ const std::string PROP_FBID = "FB_ID";
 const std::string PROP_IN_FENCE_FD = "IN_FENCE_FD";
 const std::string PROP_CRTC_ID = "CRTC_ID";
 const std::string PROP_TYPE = "type";
+
+const std::string PROP_CRTC_X_ID = "CRTC_X";
+const std::string PROP_CRTC_Y_ID = "CRTC_Y";
+const std::string PROP_CRTC_W_ID = "CRTC_W";
+const std::string PROP_CRTC_H_ID = "CRTC_H";
+
+const std::string PROP_SRC_X_ID = "SRC_X";
+const std::string PROP_SRC_Y_ID = "SRC_Y";
+const std::string PROP_SRC_W_ID = "SRC_W";
+const std::string PROP_SRC_H_ID = "SRC_H";
+
 class DrmDevice;
 
 class DrmPlane {
@@ -35,6 +46,8 @@ public:
     explicit DrmPlane(drmModePlane &p);
     virtual ~DrmPlane();
     int32_t Init(DrmDevice &drmDevice);
+    int GetCrtcProp(DrmDevice &drmDevice);
+    int GetSrcProp(DrmDevice &drmDevice);
     uint32_t GetId() const
     {
         return mId;
@@ -42,6 +55,38 @@ public:
     uint32_t GetPropFbId() const
     {
         return mPropFbId;
+    }
+    uint32_t GetPropCrtc_xId() const
+    {
+        return mPropCrtc_xId;
+    }
+    uint32_t GetPropCrtc_yId() const
+    {
+        return mPropCrtc_yId;
+    }
+    uint32_t GetPropCrtc_wId() const
+    {
+        return mPropCrtc_wId;
+    }
+    uint32_t GetPropCrtc_hId() const
+    {
+        return mPropCrtc_hId;
+    }
+    uint32_t GetPropSrc_xId() const
+    {
+        return mPropSrc_xId;
+    }
+    uint32_t GetPropSrc_yId() const
+    {
+        return mPropSrc_yId;
+    }
+    uint32_t GetPropSrc_wId() const
+    {
+        return mPropSrc_wId;
+    }
+    uint32_t GetPropSrc_hId() const
+    {
+        return mPropSrc_hId;
     }
     uint32_t GetPropFenceInId() const
     {
@@ -78,6 +123,17 @@ private:
     uint32_t mPropFbId = 0;
     uint32_t mPropFenceInId = 0;
     uint32_t mPropCrtcId = 0;
+
+    uint32_t mPropCrtc_xId = 0;
+    uint32_t mPropCrtc_yId = 0;
+    uint32_t mPropCrtc_wId = 0;
+    uint32_t mPropCrtc_hId = 0;
+
+    uint32_t mPropSrc_xId = 0;
+    uint32_t mPropSrc_yId = 0;
+    uint32_t mPropSrc_wId = 0;
+    uint32_t mPropSrc_hId = 0;
+
     uint32_t mPipe = 0;
     uint32_t mType = 0;
     std::vector<uint32_t> mFormats;

@@ -55,7 +55,7 @@ public:
     int32_t UpdateMode(std::unique_ptr<DrmModeBlock> &modeBlock, drmModeAtomicReq &pset);
 
 private:
-    int32_t ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, drmModeAtomicReqPtr pset);
+    int32_t ApplyPlane(HdiDrmLayer &layer, HdiLayer &hlayer, DrmPlane &drmPlane, drmModeAtomicReqPtr pset);
     std::shared_ptr<DrmDevice> mDrmDevice;
     std::shared_ptr<DrmConnector> mConnector;
     std::shared_ptr<DrmCrtc> mCrtc;

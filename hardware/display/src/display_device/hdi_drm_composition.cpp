@@ -53,12 +53,16 @@ int32_t HdiDrmComposition::SetLayers(std::vector<HdiLayer *> &layers, HdiLayer &
     return DISPLAY_SUCCESS;
 }
 
-int32_t HdiDrmComposition::ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, drmModeAtomicReqPtr pset)
+int32_t HdiDrmComposition::ApplyPlane(HdiDrmLayer &layer, HdiLayer &hlayer, DrmPlane &drmPlane, drmModeAtomicReqPtr pset)
 {
     // set fence in
     int ret;
     int fenceFd = layer.GetAcquireFenceFd();
     int propId = drmPlane.GetPropFenceInId();
+    HdiLayerBuffer *layerBuffer = hlayer.GetCurrentBuffer();
+    int32_t bufferW = layerBuffer->GetWight();
+    int32_t bufferH = layerBuffer->GetHeight();
+
     DISPLAY_LOGD();
     if (propId != 0) {
         DISPLAY_LOGD("set the fence in prop");
@@ -69,6 +73,46 @@ int32_t HdiDrmComposition::ApplyPlane(HdiDrmLayer &layer, DrmPlane &drmPlane, dr
             DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set IN_FENCE_FD failed"));
         }
     }
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropCrtc_xId(), 0);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropCrtc_xId %{public}d, crop.x %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropCrtc_xId(), 0);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropCrtc_yId(), 0);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropCrtc_yId %{public}d, crop.y %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropCrtc_yId(), 0);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropCrtc_wId(), bufferW);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropCrtc_wId %{public}d, crop.w %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropCrtc_wId(), bufferW);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropCrtc_hId(), bufferH);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropCrtc_hId %{public}d, crop.h %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropCrtc_xId(), bufferH);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrc_xId(), 0<<16);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropSrc_xId %{public}d, displayRect.x %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrc_xId(), 0);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrc_yId(), 0<<16);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropSrc_yId %{public}d, displayRect.y %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrc_yId(), 0);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrc_wId(), bufferW<<16);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropCrtc_wId %{public}d, displayRect.w %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrc_wId(), bufferW);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
+
+    ret = drmModeAtomicAddProperty(pset, drmPlane.GetId(), drmPlane.GetPropSrc_hId(), bufferH<<16);
+    DISPLAY_LOGD("set the fb planeid %{public}d, GetPropSrc_hId %{public}d, displayRect.h %{public}d", drmPlane.GetId(),
+        drmPlane.GetPropSrc_hId(), bufferH);
+    DISPLAY_CHK_RETURN((ret < 0), DISPLAY_FAILURE, DISPLAY_LOGE("set the fb planeid fialed errno : %{public}d", errno));
 
     // set fb id
     DrmGemBuffer *gemBuffer = layer.GetGemBuffer();
@@ -142,8 +186,9 @@ int32_t HdiDrmComposition::Apply(bool modeSet)
     DISPLAY_LOGD("mCompLayers size %{public}zd", mCompLayers.size());
     for (uint32_t i = 0; i < mCompLayers.size(); i++) {
         HdiDrmLayer *layer = static_cast<HdiDrmLayer *>(mCompLayers[i]);
+        HdiLayer *hlayer = mCompLayers[i];
         auto &drmPlane = mPlanes[i];
-        ret = ApplyPlane(*layer, *drmPlane, atomicReqPtr.Get());
+        ret = ApplyPlane(*layer, *hlayer, *drmPlane, atomicReqPtr.Get());
         if (ret != DISPLAY_SUCCESS) {
             DISPLAY_LOGE("apply plane failed");
             break;

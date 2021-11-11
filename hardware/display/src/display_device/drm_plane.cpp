@@ -28,11 +28,75 @@ DrmPlane::~DrmPlane()
     DISPLAY_LOGD();
 }
 
+int DrmPlane::GetCrtcProp(DrmDevice &drmDevice)
+{
+    int32_t ret;
+    int32_t crtc_x, crtc_y, crtc_w, crtc_h;
+    DrmProperty prop;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_X_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc_x prop id"));
+    mPropCrtc_xId = prop.propId;
+    crtc_x = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_Y_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc_y prop id"));
+    mPropCrtc_yId = prop.propId;
+    crtc_y = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_W_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc_w prop id"));
+    mPropCrtc_wId = prop.propId;
+    crtc_w = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_H_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc_h prop id"));
+    mPropCrtc_hId = prop.propId;
+    crtc_h = prop.value;
+
+    DISPLAY_LOGE("plane %{public}d crtc_x %{public}d crtc_y %{public}d crtc_w %{public}d crtc_h %{public}d",GetId(), crtc_x, crtc_y, crtc_w, crtc_h);
+
+    return 0;
+}
+
+int  DrmPlane::GetSrcProp(DrmDevice &drmDevice)
+{
+    int32_t ret;
+    int32_t src_x, src_y, src_w, src_h;
+    DrmProperty prop;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_X_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane src_x prop id"));
+    mPropSrc_xId = prop.propId;
+    src_x = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_Y_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane src_y prop id"));
+    mPropSrc_yId = prop.propId;
+    src_y = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_W_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane src_w prop id"));
+    mPropSrc_wId = prop.propId;
+    src_w = prop.value;
+
+    ret = drmDevice.GetPlaneProperty(*this, PROP_SRC_H_ID, prop);
+    DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane src_h prop id"));
+    mPropSrc_hId = prop.propId;
+    src_h = prop.value;
+
+    DISPLAY_LOGE("plane %{public}d src_x %{public}d src_y %{public}d src_w %{public}d src_h %{public}d",GetId(), src_x, src_y, src_w, src_h);
+
+    return 0;
+}
+
 int32_t DrmPlane::Init(DrmDevice &drmDevice)
 {
     DISPLAY_LOGD();
     int32_t ret;
     DrmProperty prop;
+    GetCrtcProp(drmDevice);
+    GetSrcProp(drmDevice);
     ret = drmDevice.GetPlaneProperty(*this, PROP_FBID, prop);
     mPropFbId = prop.propId;
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("can not get plane fb id"));
@@ -42,6 +106,7 @@ int32_t DrmPlane::Init(DrmDevice &drmDevice)
     ret = drmDevice.GetPlaneProperty(*this, PROP_CRTC_ID, prop);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc prop id"));
     mPropCrtcId = prop.propId;
+
     ret = drmDevice.GetPlaneProperty(*this, PROP_TYPE, prop);
     DISPLAY_CHK_RETURN((ret != DISPLAY_SUCCESS), DISPLAY_FAILURE, DISPLAY_LOGE("cat not get pane crtc prop id"));
     switch (prop.value) {
