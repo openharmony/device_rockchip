@@ -33,7 +33,7 @@ std::shared_ptr<HdiDeviceInterface> DrmDevice::Create()
     DISPLAY_LOGD();
     if (mDrmFd == nullptr) {
         const std::string name("rockchip");
-        int drmFd = drmOpen(name.c_str(), nullptr);
+        int drmFd = open("/dev/dri/card0", O_RDWR | O_CLOEXEC);//drmOpen(name.c_str(), nullptr);
         if (drmFd < 0) {
             DISPLAY_LOGE("drm file:%{public}s open failed %{public}s", name.c_str(), strerror(errno));
             return nullptr;
