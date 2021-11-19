@@ -89,14 +89,3 @@ python3 flash.py -d     //烧写userdata.img
 ```
 
 *说明：烧写多个指定固件，可以根据需要执行输入多个参数。如：-sv表示烧写system.img和vendor.img*
-
-## 注意
-
-因为RK3566和RK3568的MiniLoaderAll.bin无法兼容，默认的MiniLoaderAll.bin是支持RK3568。
-
-如果你开发板是RK3566请执行如下下载后在按上诉步骤烧写固件：
-
-```
-cp out/ohos-arm-release/packages/phone/images/MiniLoaderAll_RK3566.bin out/ohos-arm-release/packages/phone/images/MiniLoaderAll.bin 
-```
-
