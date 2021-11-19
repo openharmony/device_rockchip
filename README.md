@@ -6,15 +6,14 @@
 | -------- | ------------------------------------------------------------ |
 | 完整镜像 | [rk3568_sig.tar.gz](https://gitee.com/hihope-rockchip/images) |
 
-## 烧录方式
-
-### 工具下载
-
-烧写工具下载及使用。
-[参考](https://gitee.com/hihope-rockchip/rkdownload/tree/master/%E7%83%A7%E5%86%99%E5%B7%A5%E5%85%B7)
-
 
 ## 编译方法
 
 编译方法简单，但编译环境搭建相对复杂。
-[参考](https://gitee.com/hihope-rockchip/rkdownload)
+[参考](compile.md)
+
+
+## 烧录工具
+
+烧写工具下载及使用。
+[参考](rk3568/tools)
